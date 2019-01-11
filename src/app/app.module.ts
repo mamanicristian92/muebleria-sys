@@ -39,9 +39,12 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { MuebleService } from './_service/mueble.service';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     AppAsideModule,
@@ -62,7 +65,8 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
     LoginComponent,
     RegisterComponent
   ],
-  providers: [{
+  providers: [
+    MuebleService,{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
   }],
