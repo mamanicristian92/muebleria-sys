@@ -3,6 +3,8 @@ import { FormBuilder, Form, Validators, FormGroup } from '@angular/forms';
 import { Mueble } from '../../_models/Mueble';
 import { MuebleService } from '../../_service/mueble.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TipoMuebleService } from '../../_service/tipo.mueble.service';
+import { TipoMueble } from '../../_models/TipoMueble';
 
 @Component({
   selector: 'app-mueble-carga',
@@ -13,10 +15,12 @@ export class MuebleCargaComponent implements OnInit {
 
   id_mueble:number;
   formulario:FormGroup;
+  tiposMuebles:TipoMueble[];
 
   constructor(
     private fb:FormBuilder,
     private muebleService:MuebleService,
+    private tipoMuebleService: TipoMuebleService,
     private route: ActivatedRoute,
     private router:Router,
   ) {
@@ -27,6 +31,11 @@ export class MuebleCargaComponent implements OnInit {
     this.formulario = this.fb.group({
       nombre:['',Validators.required],
       descripcion:'',
+      id_tipo_mueble:'',
+
+    });
+    this.tipoMuebleService.getAll().subscribe(response=>{
+      this.tiposMuebles=response;
     });
     this.route.params.subscribe(params=>{
       let id = params['id_mueble'];
@@ -50,8 +59,10 @@ export class MuebleCargaComponent implements OnInit {
     let item = <Mueble>{};
     item.nombre = this.formulario.controls.nombre.value;
     item.descripcion = this.formulario.controls.descripcion.value;
+    item.id_tipo_mueble= this.formulario.controls.descripcion.value;
     this.muebleService.store(item).subscribe(response=>{
       this.router.navigate(['/']);
     });
+
   }
 }

@@ -24,4 +24,8 @@ export class TipoMuebleService {
   getBy(id:number){
     return this.http.get<TipoMueble>(this.base_path + 'muebles/tipos/'+id);
   }
+
+  update(item:TipoMueble){
+    return this.http.put<TipoMueble>(this.base_path + 'muebles/tipos/'+item.id,item);
+  }
 }

@@ -26,4 +26,7 @@ export class ListadoMuebleComponent implements OnInit {
   ver(item:Mueble){
     this.router.navigate(['muebles/'+item.id+'/editar']);
   }
+  nuevo() {
+    this.router.navigate(['muebles/nuevo']);
+  }
 }
