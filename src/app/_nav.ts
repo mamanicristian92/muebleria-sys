@@ -13,6 +13,11 @@ export const navItems = [
     name: 'Theme'
   },
   {
+    name: 'Productos',
+    url: '/productos',
+    icon: 'icon-star',
+  },
+  {
     name: 'Muebles',
     url: '/muebles',
     icon: 'icon-star',

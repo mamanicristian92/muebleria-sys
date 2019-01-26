@@ -52,8 +52,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'muebles',
-        loadChildren: './muebles/muebles.module#MueblesModule'
-      },{
+        loadChildren: './muebles/muebles.module#MueblesModule',
+      },
+      {
+        path: 'productos',
+        loadChildren: './productos/productos.module#ProductosModule'
+      },
+      {
         path: 'base',
         loadChildren: './views/base/base.module#BaseModule'
       },

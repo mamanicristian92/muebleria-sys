@@ -5,30 +5,41 @@ import { ListadoMuebleComponent } from './listado-mueble/listado-mueble.componen
 import { TipoMuebleCargaComponent } from './tipo-mueble-carga/tipo-mueble-carga.component';
 import { ListadoTipoMuebleComponent } from './listado-tipo-mueble/listado-tipo-mueble.component';
 
-const routes: Routes = [{
-  path:'nuevo',
-  component:MuebleCargaComponent,
-},{
-  path:'',
-  component:ListadoMuebleComponent,
-},{
-  path:':id_mueble/editar',
-  component:MuebleCargaComponent,
-},{
-  path:'tipos',
-  children:[
-    {
-      path:'nuevo',
-      component:TipoMuebleCargaComponent,
-    },{
-      path:'',
-      component:ListadoTipoMuebleComponent,
-    },{
-      path:':id_mueble/editar',
-      component:TipoMuebleCargaComponent,
-    }
-  ]
-}];
+const routes: Routes = [
+  {
+    path:'',
+    component:ListadoMuebleComponent,
+    data: {
+      title: 'Muebles'
+    },
+  },
+  {
+    path:'nuevo',
+    component:MuebleCargaComponent,
+    data: {
+      title: 'Nuevo'
+    },
+  },
+  {
+    path:':id_mueble/editar',
+    component:MuebleCargaComponent,
+  },
+  {
+    path:'tipos',
+    children:[
+      {
+        path:'nuevo',
+        component:TipoMuebleCargaComponent,
+      },{
+        path:'',
+        component:ListadoTipoMuebleComponent,
+      },{
+        path:':id_mueble/editar',
+        component:TipoMuebleCargaComponent,
+      }
+    ]
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

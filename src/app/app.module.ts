@@ -42,6 +42,7 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { MuebleService } from './_service/mueble.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InicioComponent } from './inicio/inicio.component';
+import { ProductoService } from './_service/producto.service';
 
 @NgModule({
   imports: [
@@ -68,6 +69,7 @@ import { InicioComponent } from './inicio/inicio.component';
     InicioComponent
   ],
   providers: [
+    ProductoService,
     MuebleService,{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
