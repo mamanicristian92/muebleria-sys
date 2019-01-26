@@ -12,8 +12,15 @@
             Descripcion
           </th>
           <th>
+            Cantidad
           </th>
-
+          <th>
+            Cantidad mínima
+          </th>
+          <th>
+            Precio
+          </th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -24,6 +31,15 @@
           <td>
             {{ item.descripcion }}
           </td>
+          <th>
+            {{ item.cantidad}}
+          </th>
+          <th>
+            {{ item.cantidad_minima }}
+          </th>
+          <th>
+            {{ item.precio }}
+          </th>
           <td>
             <button (click)="ver(item)" >VER</button>
           </td>
