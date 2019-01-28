@@ -6,4 +6,10 @@ export interface Producto{
     cantidad_minima: number;
     precio: number;
     precio_lista: number;
+    fotos:ProductoFoto[];
+}
+export interface ProductoFoto{
+    id:number;
+    nombre:string;
+    created_at:Date;
 }

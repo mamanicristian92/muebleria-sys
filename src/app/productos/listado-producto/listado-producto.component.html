@@ -41,7 +41,14 @@
             {{ item.precio }}
           </th>
           <td>
-            <button (click)="ver(item)" >VER</button>
+            <button (click)="ver(item)" class="btn btn-secondary btn-sm m-1">
+              <i class="fa fa-file-text-o "></i>
+            </button>
+              <button (click)="ver_foto(item)" type="button" class="btn btn-secondary btn-sm m-1">
+                <i class="fa fa-image "></i>
+
+              </button>
+          
           </td>
         </tr>
       </tbody>

@@ -66,7 +66,7 @@ import { ProductoService } from './_service/producto.service';
     P500Component,
     LoginComponent,
     RegisterComponent,
-    InicioComponent
+    InicioComponent,
   ],
   providers: [
     ProductoService,

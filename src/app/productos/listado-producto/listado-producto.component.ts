@@ -26,6 +26,9 @@ export class ListadoProductoComponent implements OnInit {
   nuevo() {
     this.router.navigate(['productos/nuevo']);
   }
+  ver_foto(item:Producto){
+    this.router.navigate(['productos/'+item.id+'/fotos']);
+  }
 }
 /*
 

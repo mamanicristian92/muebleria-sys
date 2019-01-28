@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http'
-import { Producto } from '../_models/Producto';
+import { Producto, ProductoFoto } from '../_models/Producto';
 import { environment } from '../../environments/environment';
 
 @Injectable({
@@ -19,6 +19,9 @@ export class ProductoService {
 */
   getAll(){
     return this.http.get<Producto[]>(this.base_path + 'productos');
+  }
+  fotos(id_producto:number){
+    return this.http.get<ProductoFoto[]>(this.base_path + 'productos/'+id_producto+'/fotos');
   }
 /*
   getBy(id:number){
