@@ -1,41 +1,156 @@
-<div class="row">
-  <div class="col-lg-12">
-    <div class="card">
-      <div class="card-header">Titulo</div>
-      <div class="card-body">
-        <form [formGroup]="formulario">
-          <div class="row">
-            <div class="form-group col-lg-6">
-              <label>Nombre</label>
-              <input class="form-control" formControlName="nombre" type="text">
-            </div>
-            <div class="form-group col-lg-6">
-                <label>Descripcion</label>
-              <input class="form-control" formControlName="descripcion" type="text">
-            </div>
-            <div class="form-group col-lg-6">
-              <label>Tipo</label>
-              <select class="form-control" formControlName="id_tipo_mueble">
-                <option *ngFor='let item of tiposMuebles' [value]='item.id'>
-                  {{item.nombre}}
-                </option>
-              </select>
-            </div>
-            <div class="form-group col-lg-6">
-                <label>Tipo Linea</label>
-                <select class="form-control" formControlName="id_tipo_linea">
-                  <option *ngFor='let item of tiposMuebles' [value]='item.id'>
-                    {{item.nombre}}
-                  </option>
-                </select>
-              </div>
-          </div>
-        </form>
-      </div>
-      <div class="card-footer">
-        <button [disabled]="!formulario.valid" (click)="confirmar()"
-          >Guardar Cambios</button>
-      </div>
+<div class="card">
+  <div class="card-body">
+  <ngfFormData
+    [files]      = "files"
+    postName     = "file"
+    [(FormData)] = "sendableFormData"
+  ></ngfFormData>
+
+  <ngfUploadStatus
+  [(percent)] = "progress"
+  [httpEvent] = "httpEvent"
+  ></ngfUploadStatus>
+
+  <div class="inline-block">
+    <div
+      ngfDrop
+      multiple         = "1"
+      selectable       = "1"
+      [(validDrag)]    = "validComboDrag"
+      [(files)]        = "files"
+      accept           = "image/*"
+      [maxSize]        = "maxSize"
+      [(lastInvalids)] = "lastInvalids"
+      [(dragFiles)]    = "dragFiles"
+      class            = "well my-drop-zone"
+      [class.invalid-drag] = "validComboDrag===false"
+      [class.valid-drag]   = "validComboDrag"
+      (filesChange) = "lastFileAt=getDate()"
+    >
+      Selecicona o Arrastra la <strong>imagen</strong> aqui 
     </div>
+    <!---<strong>accept:</strong>-->
+    <!-- <div>
+     <input type="text" value="image/*" disabled readonly="" style="width:100%" />
+    </div>-->
+  </div>
+
+  <div *ngIf="dragFiles">
+    <h3 style="margin:0">Drag Files</h3>
+    <p *ngIf="!dragFiles.length" style="color:red;">
+      This browser does NOT release metadata for files being dragged. All files will be considered valid drags until dropped.
+    </p>
+    <pre>{{ dragFiles | json }}</pre>
+  </div>
+  
+  <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
+    <h3 style="color:red;">Last {{ lastInvalids.length }} Invalid Selected Files</h3>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Error</th>
+          <th>Type</th>
+          <th>Size</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lastInvalids;let i=index">
+          <td>
+            <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.file.type)>=0">
+              <div class="previewIcon" [ngfBackground]="item.File"></div>
+            </div>
+            <strong>{{ item.file.name }}</strong>
+          </td>
+          <td nowrap>
+            {{ item.type }}
+          </td>
+          <td nowrap>
+            {{ item.file.type }}
+          </td>
+          <td nowrap>
+            {{ item.file.size/1024/1024 | number:'.2' }} MB
+          </td>
+          <td nowrap>
+            <button type="button"
+              class="btn btn-danger btn-xs"
+              (click)="lastInvalids.splice(i,1)"
+            >
+              <span class="fa fa-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div style="margin-bottom: 40px" *ngIf="files">
+    <h3>{{ files.length }} Archivos en cola</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Tamaño</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of files;let i=index">
+          <td>
+            <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+              <div class="previewIcon" [ngfBackground]="item"></div>
+            </div>
+            <strong>{{ item.name }}</strong>
+          </td>
+          <td nowrap>
+            {{ item.type }}
+          </td>
+          <td nowrap>
+            {{ item.size/1024/1024 | number:'.2' }} MB
+          </td>
+          <td nowrap>
+            <button type="button"
+              class="btn btn-danger btn-xs"
+              (click)="files.splice(i,1)"
+            >
+              <span class="fa fa-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div>
+      <!--
+      <div>
+        Queue progress:
+        <div class="progress" style="">
+          <div class="progress-bar"
+            role="progressbar"
+            [ngStyle]="{ 'width': progress + '%' }"
+          ></div>
+        </div>
+      </div>
+      -->
+      <ng-container *ngIf="lastFileAt">
+        <p>
+          <strong>Last file(s) selected At:</strong> {{ lastFileAt | date : 'dd/MM/yyyy HH:mm' }}
+        </p>
+      </ng-container>
+  
+      <i *ngIf="progress==100" class="fa fa-ok"></i>
+  
+      <button type="button"
+        class="btn btn-success btn-s"
+        (click)="uploadFiles(files)"
+        [disabled]="!files.length"
+      >
+        <span class="fa fa-upload"></span> Upload all
+      </button>
+    </div>
+  </div>
   </div>
 </div>

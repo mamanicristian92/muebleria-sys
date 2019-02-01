@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../_service/producto.service';
 import { ProductoFoto } from '../../_models/Producto';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-listado-foto',
@@ -15,6 +16,7 @@ id:number;
     private productoService:ProductoService,
     private route: ActivatedRoute,
     private router:Router,
+    private sanitezer:DomSanitizer,
   ) { }
 
 
@@ -24,6 +26,13 @@ id:number;
       console.log(params);
       this.productoService.fotos(this.id).subscribe(response=>{
         this.fotos=response;
+        this.fotos.forEach(foto=>{
+          this.productoService.foto(foto).subscribe(Blob=>{
+            let urlCreator=window.URL;
+            foto.archivo=this.sanitezer.bypassSecurityTrustUrl(urlCreator.createObjectURL(Blob));
+          });
+          return foto;
+        })
       });
     });
   }

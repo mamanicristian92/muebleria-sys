@@ -6,10 +6,10 @@
     <div class="col-sm-6 col-md-4" *ngFor="let foto of fotos">
       <div class="card">
         <div class="card-header">
-          {{item.nombre}}
+          {{foto.nombre}}
         </div>
-        <div class="card-body">
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.
+        <div class="card-body" *ngIf="foto.archivo">
+          <img [src]="foto.archivo" class="img-thumbnail" [alt]="foto.nombre">
         </div>
       </div>
     </div><!--/.col-->

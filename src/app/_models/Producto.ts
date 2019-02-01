@@ -10,6 +10,8 @@ export interface Producto{
 }
 export interface ProductoFoto{
     id:number;
+    id_producto:number;
     nombre:string;
     created_at:Date;
+    archivo:any;
 }
