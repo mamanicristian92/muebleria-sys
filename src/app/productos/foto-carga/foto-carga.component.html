@@ -27,7 +27,7 @@
       [class.valid-drag]   = "validComboDrag"
       (filesChange) = "lastFileAt=getDate()"
     >
-      Selecicona o Arrastra la <strong>imagen</strong> aqui 
+      Selecicona o Arrastra la <strong>imagen</strong> aqui &nbsp;  
     </div>
     <!---<strong>accept:</strong>-->
     <!-- <div>
@@ -36,24 +36,24 @@
   </div>
 
   <div *ngIf="dragFiles">
-    <h3 style="margin:0">Drag Files</h3>
+    <h3 style="margin:0">Esta por cargar archivos</h3>
     <p *ngIf="!dragFiles.length" style="color:red;">
-      This browser does NOT release metadata for files being dragged. All files will be considered valid drags until dropped.
+      Usted esta por agragar un archivo a la lista de archivos para cargar
     </p>
     <pre>{{ dragFiles | json }}</pre>
   </div>
   
   <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
-    <h3 style="color:red;">Last {{ lastInvalids.length }} Invalid Selected Files</h3>
+    <h3 style="color:red;">{{ lastInvalids.length }} Formatos de archivos no validos</h3>
   
     <table class="table">
       <thead>
         <tr>
-          <th>Name</th>
+          <th>Nombre</th>
           <th>Error</th>
-          <th>Type</th>
-          <th>Size</th>
-          <th>Actions</th>
+          <th>Tipo</th>
+          <th>Tamaño</th>
+          <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
@@ -87,7 +87,7 @@
   </div>
   
   <div style="margin-bottom: 40px" *ngIf="files">
-    <h3>{{ files.length }} Archivos en cola</h3>
+    <h3>{{ files.length }} Archivos para cargar</h3>
     <table class="table">
       <thead>
         <tr>
@@ -137,7 +137,7 @@
       -->
       <ng-container *ngIf="lastFileAt">
         <p>
-          <strong>Last file(s) selected At:</strong> {{ lastFileAt | date : 'dd/MM/yyyy HH:mm' }}
+          <strong>Último archivo(s) seleccionado:</strong> {{ lastFileAt | date : 'dd/MM/yyyy HH:mm' }}
         </p>
       </ng-container>
   
@@ -148,7 +148,7 @@
         (click)="uploadFiles(files)"
         [disabled]="!files.length"
       >
-        <span class="fa fa-upload"></span> Upload all
+        <span class="fa fa-upload"></span> Cargar todo
       </button>
     </div>
   </div>
