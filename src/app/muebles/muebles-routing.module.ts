@@ -8,22 +8,31 @@ import { ListadoTipoMuebleComponent } from './listado-tipo-mueble/listado-tipo-m
 const routes: Routes = [
   {
     path:'',
-    component:ListadoMuebleComponent,
     data: {
       title: 'Muebles'
     },
+    children:[
+      {
+        path:'',
+        component:ListadoMuebleComponent,
+        data: {
+          title: 'Listado'
+        },
+      },
+      {
+        path:'nuevo',
+        component:MuebleCargaComponent,
+        data: {
+          title: 'Nuevo'
+        },
+      },
+      {
+        path:':id_mueble/editar',
+        component:MuebleCargaComponent,
+      },
+    ],
   },
-  {
-    path:'nuevo',
-    component:MuebleCargaComponent,
-    data: {
-      title: 'Nuevo'
-    },
-  },
-  {
-    path:':id_mueble/editar',
-    component:MuebleCargaComponent,
-  },
+  
   {
     path:'tipos',
     children:[

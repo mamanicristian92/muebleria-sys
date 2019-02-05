@@ -18,10 +18,10 @@
       <tbody>
         <tr *ngFor="let item of muebles">
           <td>
-            {{ item.nombre }}
+            {{ item.producto.nombre }}
           </td>
           <td>
-            {{ item.descripcion }}
+            {{ item.producto.descripcion }}
           </td>
           <td>
             <button (click)="ver(item)" >VER</button>
@@ -35,8 +35,7 @@
 <div>
   <div class="card">
     <div class="card-body">
-        <button class="btn btn-primary" (click)="nuevo()"> Nuevo </button >
-      
+      <button class="btn btn-primary" (click)="nuevo()"> Nuevo </button >
     </div>
   </div>
 </div>

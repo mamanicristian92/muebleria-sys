@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Categoria } from '../../_models/Categoria';
+import { ProductoService } from '../../_service/producto.service';
+import { CategoriaService } from '../../_service/categoria.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Producto } from '../../_models/Producto';
 
 @Component({
   selector: 'app-producto-carga',
@@ -10,44 +15,73 @@ export class ProductoCargaComponent implements OnInit {
 
   id_producto;
   formulario:FormGroup;
-  //tiposMuebles:[];
-  constructor() { }
+  categorias:Categoria[];
+  constructor(
+    private fb:FormBuilder,
+    private productoService:ProductoService,
+    private categoriaService:CategoriaService,
+    private route: ActivatedRoute,
+    private router:Router,
+  ) {}
 
   ngOnInit() {
+    this.formulario = this.fb.group({
+      nombre:['',Validators.required],
+      descripcion:'',
+      id_categoria:'',
+
+      cantidad:'',
+      cantidad_minima:'',
+      precio:'',
+      precio_lista:'',
+
+    });
+    this.categoriaService.getAll().subscribe(response=>{
+      this.categorias
+    });
+    this.route.params.subscribe(params=>{
+      let id = params['id_producto'];
+    })
+  }
+  confirmar(){
+    if(!this.formulario.valid){
+      return;
+    }
+    let item = <Producto>{};
+    item.nombre = this.formulario.controls.nombre.value;
+    item.descripcion = this.formulario.controls.descripcion.value;
+    //item.id_tipo_mueble= this.formulario.controls.descripcion.value;
+
+    item.cantidad = this.formulario.controls.cantidad.value;
+    item.cantidad_minima = this.formulario.controls.cantidad_minima.value;
+    item.precio = this.formulario.controls.precio.value;
+    item.precio_lista = this.formulario.controls.precio_lista.value;
+
+    this.productoService.store(item).subscribe(response=>{
+      this.router.navigate(['/']);
+    });
   }
 
 }
 
 /*
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Form, Validators, FormGroup } from '@angular/forms';
-import { Mueble } from '../../_models/Mueble';
-import { MuebleService } from '../../_service/mueble.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { TipoMuebleService } from '../../_service/tipo.mueble.service';
-import { TipoMueble } from '../../_models/TipoMueble';
 
-@Component({
-  selector: 'app-mueble-carga',
-  templateUrl: './mueble-carga.component.html',
-  styleUrls: ['./mueble-carga.component.scss']
-})
 export class MuebleCargaComponent implements OnInit {
 
-  id_mueble:number;
-  formulario:FormGroup;
-  tiposMuebles:TipoMueble[];
-
-  constructor(
-    private fb:FormBuilder,
-    private muebleService:MuebleService,
-    private tipoMuebleService: TipoMuebleService,
-    private route: ActivatedRoute,
-    private router:Router,
-  ) {
+  confirmar(){
+    if(!this.formulario.valid){
+      return;
+    }
+    let item = <Mueble>{};
+    item.nombre = this.formulario.controls.nombre.value;
+    item.descripcion = this.formulario.controls.descripcion.value;
+    item.id_tipo_mueble= this.formulario.controls.descripcion.value;
     
-   }
+    this.muebleService.store(item).subscribe(response=>{
+      this.router.navigate(['/']);
+    });
 
+  }
   ngOnInit() {
     this.formulario = this.fb.group({
       nombre:['',Validators.required],
@@ -73,19 +107,6 @@ export class MuebleCargaComponent implements OnInit {
     });
   }
 
-  confirmar(){
-    if(!this.formulario.valid){
-      return;
-    }
-    let item = <Mueble>{};
-    item.nombre = this.formulario.controls.nombre.value;
-    item.descripcion = this.formulario.controls.descripcion.value;
-    item.id_tipo_mueble= this.formulario.controls.descripcion.value;
-    
-    this.muebleService.store(item).subscribe(response=>{
-      this.router.navigate(['/']);
-    });
-
-  }
+  
 }
 */

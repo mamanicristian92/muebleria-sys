@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  base_path: 'http://muebleria-rest.proyectosinformaticos.com.ar/api/',
+  //base_path: 'http://muebleria-rest.proyectosinformaticos.com.ar/api/',
+  base_path: 'http://localhost:8000/api/',
 };

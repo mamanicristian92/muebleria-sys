@@ -5,6 +5,7 @@ import { MuebleService } from '../../_service/mueble.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { TipoMuebleService } from '../../_service/tipo.mueble.service';
 import { TipoMueble } from '../../_models/TipoMueble';
+import { Producto } from '../../_models/Producto';
 
 @Component({
   selector: 'app-mueble-carga',
@@ -32,7 +33,14 @@ export class MuebleCargaComponent implements OnInit {
       nombre:['',Validators.required],
       descripcion:'',
       id_tipo_mueble:'',
-
+      id_tipo_linea:'',
+      cantidad_puertas:'',
+      cantidad_cajones:'',
+      cantidad_estantes:'',
+      alto:'',
+      ancho:'',
+      profundidad:'',
+      tapizado:'',
     });
     this.tipoMuebleService.getAll().subscribe(response=>{
       this.tiposMuebles=response;
@@ -43,8 +51,15 @@ export class MuebleCargaComponent implements OnInit {
         this.id_mueble = +id;
 
         this.muebleService.getBy(this.id_mueble).subscribe(response=>{
-          this.formulario.controls.nombre.setValue(response.nombre);
-          this.formulario.controls.descripcion.setValue(response.descripcion);
+          this.formulario.controls.nombre.setValue(response.producto.nombre);
+          this.formulario.controls.descripcion.setValue(response.producto.descripcion);
+          this.formulario.controls.cantidad_puertas.setValue(response.cantidad_puertas);
+          this.formulario.controls.cantidad_cajones.setValue(response.cantidad_cajones);
+          this.formulario.controls.cantidad_estantes.setValue(response.cantidad_estantes);
+          this.formulario.controls.alto.setValue(response.alto);
+          this.formulario.controls.ancho.setValue(response.ancho);
+          this.formulario.controls.profundidad.setValue(response.profundidad);
+          this.formulario.controls.tapizado.setValue(response.tapizado);
         });
       } else {
         this.id_mueble = 0;
@@ -57,12 +72,27 @@ export class MuebleCargaComponent implements OnInit {
       return;
     }
     let item = <Mueble>{};
-    item.nombre = this.formulario.controls.nombre.value;
-    item.descripcion = this.formulario.controls.descripcion.value;
+    let prod = <Producto>{};
+    item.id=this.id_mueble;
+    prod.nombre=this.formulario.controls.nombre.value;
+    prod.descripcion=this.formulario.controls.descripcion.value;
+    
     item.id_tipo_mueble= this.formulario.controls.descripcion.value;
-    this.muebleService.store(item).subscribe(response=>{
-      this.router.navigate(['/']);
-    });
-
+    item.cantidad_puertas=this.formulario.controls.cantidad_puertas.value;
+    item.cantidad_cajones=this.formulario.controls.cantidad_cajones.value;
+    item.cantidad_estantes=this.formulario.controls.cantidad_estantes.value;
+    item.alto=this.formulario.controls.alto.value;
+    item.ancho=this.formulario.controls.ancho.value;
+    item.profundidad=this.formulario.controls.profundidad.value;
+    if (this.id_mueble==0) {
+      this.muebleService.store(item,prod).subscribe(response=>{
+        this.router.navigate(['/']);
+      });
+    }
+    else {
+      this.muebleService.update(item,prod).subscribe(response=>{
+        this.router.navigate(['/']);
+      })
+    }
   }
 }

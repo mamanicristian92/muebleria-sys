@@ -11,6 +11,7 @@ import {Route,Router} from '@angular/router';
 export class ListadoProductoComponent implements OnInit {
 
   productos:Producto[];
+  
   constructor(
     private productoService:ProductoService,
     private router:Router,

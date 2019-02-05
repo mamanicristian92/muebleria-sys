@@ -6,4 +6,6 @@ export interface Producto{
     cantidad_minima: number;
     precio: number;
     precio_lista: number;
+    id_categoria:number;
+    
 }

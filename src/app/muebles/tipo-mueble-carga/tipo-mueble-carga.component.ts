@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit } from '@angular/core';
 import {FormBuilder, Form, Validators, FormGroup} from '@angular/forms';
 import {TipoMueble} from '../../_models/TipoMueble';
 import {TipoMuebleService} from '../../_service/tipo.mueble.service';
