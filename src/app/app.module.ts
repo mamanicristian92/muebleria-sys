@@ -17,7 +17,7 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
+import { LoginComponent, AutorizacionErrorModalComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [
@@ -43,9 +43,15 @@ import { MuebleService } from './_service/mueble.service';
 import { HttpClientModule } from '@angular/common/http';
 import { InicioComponent } from './inicio/inicio.component';
 import { ProductoService } from './_service/producto.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from './_guards/auth.guard';
+import { LoginService } from './_service/login.service';
+import { ModalModule } from 'ngx-bootstrap/modal';
+
 
 @NgModule({
   imports: [
+   ModalModule.forRoot(),
     HttpClientModule,
     BrowserModule,
     AppRoutingModule,
@@ -57,9 +63,12 @@ import { ProductoService } from './_service/producto.service';
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule
+    ChartsModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
+    AutorizacionErrorModalComponent,
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
@@ -68,12 +77,20 @@ import { ProductoService } from './_service/producto.service';
     RegisterComponent,
     InicioComponent,
   ],
+  
   providers: [
     ProductoService,
     MuebleService,{
     provide: LocationStrategy,
     useClass: HashLocationStrategy
-  }],
-  bootstrap: [ AppComponent ]
+    
+  },
+  AuthGuard,
+  LoginService,
+],
+  bootstrap: [ AppComponent ],
+  entryComponents:[
+    AutorizacionErrorModalComponent,
+  ],
 })
 export class AppModule { }
