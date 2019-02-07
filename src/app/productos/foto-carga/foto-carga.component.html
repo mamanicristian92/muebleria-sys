@@ -1,0 +1,156 @@
+<div class="card">
+  <div class="card-body">
+  <ngfFormData
+    [files]      = "files"
+    postName     = "file"
+    [(FormData)] = "sendableFormData"
+  ></ngfFormData>
+
+  <ngfUploadStatus
+  [(percent)] = "progress"
+  [httpEvent] = "httpEvent"
+  ></ngfUploadStatus>
+
+  <div class="inline-block">
+    <div
+      ngfDrop
+      multiple         = "1"
+      selectable       = "1"
+      [(validDrag)]    = "validComboDrag"
+      [(files)]        = "files"
+      accept           = "image/*"
+      [maxSize]        = "maxSize"
+      [(lastInvalids)] = "lastInvalids"
+      [(dragFiles)]    = "dragFiles"
+      class            = "well my-drop-zone"
+      [class.invalid-drag] = "validComboDrag===false"
+      [class.valid-drag]   = "validComboDrag"
+      (filesChange) = "lastFileAt=getDate()"
+    >
+      Selecicona o Arrastra la <strong>imagen</strong> aqui &nbsp;  
+    </div>
+    <!---<strong>accept:</strong>-->
+    <!-- <div>
+     <input type="text" value="image/*" disabled readonly="" style="width:100%" />
+    </div>-->
+  </div>
+
+  <div *ngIf="dragFiles">
+    <h3 style="margin:0">Esta por cargar archivos</h3>
+    <p *ngIf="!dragFiles.length" style="color:red;">
+      Usted esta por agragar un archivo a la lista de archivos para cargar
+    </p>
+    <pre>{{ dragFiles | json }}</pre>
+  </div>
+  
+  <div class="bg-warning" *ngIf="lastInvalids?.length" style="margin-bottom: 40px">
+    <h3 style="color:red;">{{ lastInvalids.length }} Formatos de archivos no validos</h3>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Error</th>
+          <th>Tipo</th>
+          <th>Tamaño</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of lastInvalids;let i=index">
+          <td>
+            <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.file.type)>=0">
+              <div class="previewIcon" [ngfBackground]="item.File"></div>
+            </div>
+            <strong>{{ item.file.name }}</strong>
+          </td>
+          <td nowrap>
+            {{ item.type }}
+          </td>
+          <td nowrap>
+            {{ item.file.type }}
+          </td>
+          <td nowrap>
+            {{ item.file.size/1024/1024 | number:'.2' }} MB
+          </td>
+          <td nowrap>
+            <button type="button"
+              class="btn btn-danger btn-xs"
+              (click)="lastInvalids.splice(i,1)"
+            >
+              <span class="fa fa-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  <div style="margin-bottom: 40px" *ngIf="files">
+    <h3>{{ files.length }} Archivos para cargar</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Tipo</th>
+          <th>Tamaño</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of files;let i=index">
+          <td>
+            <div *ngIf="['image/gif','image/png','image/jpeg'].indexOf(item.type)>=0">
+              <div class="previewIcon" [ngfBackground]="item"></div>
+            </div>
+            <strong>{{ item.name }}</strong>
+          </td>
+          <td nowrap>
+            {{ item.type }}
+          </td>
+          <td nowrap>
+            {{ item.size/1024/1024 | number:'.2' }} MB
+          </td>
+          <td nowrap>
+            <button type="button"
+              class="btn btn-danger btn-xs"
+              (click)="files.splice(i,1)"
+            >
+              <span class="fa fa-trash"></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div>
+      <!--
+      <div>
+        Queue progress:
+        <div class="progress" style="">
+          <div class="progress-bar"
+            role="progressbar"
+            [ngStyle]="{ 'width': progress + '%' }"
+          ></div>
+        </div>
+      </div>
+      -->
+      <ng-container *ngIf="lastFileAt">
+        <p>
+          <strong>Último archivo(s) seleccionado:</strong> {{ lastFileAt | date : 'dd/MM/yyyy HH:mm' }}
+        </p>
+      </ng-container>
+  
+      <i *ngIf="progress==100" class="fa fa-ok"></i>
+  
+      <button type="button"
+        class="btn btn-success btn-s"
+        (click)="uploadFiles(files)"
+        [disabled]="!files.length"
+      >
+        <span class="fa fa-upload"></span> Cargar todo
+      </button>
+    </div>
+  </div>
+  </div>
+</div>

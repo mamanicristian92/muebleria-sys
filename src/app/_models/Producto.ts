@@ -7,5 +7,12 @@ export interface Producto{
     precio: number;
     precio_lista: number;
     id_categoria:number;
-    
+    fotos:ProductoFoto[];
+}
+export interface ProductoFoto{
+    id:number;
+    id_producto:number;
+    nombre:string;
+    created_at:Date;
+    archivo:any;
 }

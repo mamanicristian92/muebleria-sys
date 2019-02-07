@@ -51,7 +51,7 @@ export class ProductoCargaComponent implements OnInit {
     item.nombre = this.formulario.controls.nombre.value;
     item.descripcion = this.formulario.controls.descripcion.value;
     //item.id_tipo_mueble= this.formulario.controls.descripcion.value;
-
+ 
     item.cantidad = this.formulario.controls.cantidad.value;
     item.cantidad_minima = this.formulario.controls.cantidad_minima.value;
     item.precio = this.formulario.controls.precio.value;

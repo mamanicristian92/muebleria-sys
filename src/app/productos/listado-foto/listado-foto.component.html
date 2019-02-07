@@ -1,0 +1,19 @@
+<div class="animated fadeIn">
+  <div class="row">
+      <button (click)="nuevo()" class="btn btn-secondary"> Agregar Nueva Foto</button>
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-sm-6 col-md-4" *ngFor="let foto of fotos">
+      <div class="card">
+        <div class="card-header">
+          {{foto.nombre}}
+        </div>
+        <div class="card-body" *ngIf="foto.archivo">
+          <img [src]="foto.archivo" class="img-thumbnail" [alt]="foto.nombre">
+        </div>
+      </div>
+    </div><!--/.col-->
+
+  </div><!--/.row-->
+</div>

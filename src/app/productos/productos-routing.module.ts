@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ListadoProductoComponent } from './listado-producto/listado-producto.component';
+import { ListadoFotoComponent } from './listado-foto/listado-foto.component';
+import { FotoCargaComponent } from './foto-carga/foto-carga.component';
 
 const routes: Routes = [
   {
@@ -8,6 +10,20 @@ const routes: Routes = [
     component:ListadoProductoComponent,
     data: {
       title: 'Productos'
+    }
+  },
+  {
+    path:':id_producto/fotos',
+    component:ListadoFotoComponent,
+    data:{
+      title:'listado foto',
+    }
+  },
+  {
+    path:':id_producto/fotos/nuevo',
+    component:FotoCargaComponent,
+    data:{
+      title:'Fotos Nuevas',
     }
   }
 ];
