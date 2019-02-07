@@ -12,11 +12,11 @@ export class ProductoService {
   constructor(
     private http:HttpClient,
   ) { }
-/*
+
   store(item:Producto){
     return this.http.post<Producto>(this.base_path + 'productos',item);
   }
-*/
+
   getAll(){
     return this.http.get<Producto[]>(this.base_path + 'productos');
   }
